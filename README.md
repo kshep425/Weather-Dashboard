@@ -1,17 +1,13 @@
 # Weather-Dashboard
 A Weather Dashboard using Open Weather Map API. 
 
-[Day Planner](https://kshep425.github.io/Weather-Dashboard/)
+[Weather Dashboard](https://kshep425.github.io/Weather-Dashboard/)
 
 ## Description
-Use this day planner to organize your day!  This will help you to stay productive and on task as the time counts down to the end of your work day.
-
-Time that has past is displayed in gray.  The current time is displayed in red.  The future time is displayed in red.
-
-Save any changes you make on a time block by selecting the save button next to it.  This saved locally on your computer so it can still be accessed even if the page refreshes.
+Use this weather dashboard to properly prepare for the day.  Search weather contions and look at future outlooks in cities all over the world.  Don't get caught out in the rain!
 
 ## Usage
-Open the [Weather Dashboard](https://kshep425.github.io/Weather-Dashboard/) and enter things to do in a time block. When you are finished click the save button next to it.  Repeat this until you have finished entering all of the time blocks.
+Open the [Weather Dashboard](https://kshep425.github.io/Weather-Dashboard/) and enter a city to view the current weather conditions.
 
 ## Credits
 
