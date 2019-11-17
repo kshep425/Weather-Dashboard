@@ -48,31 +48,34 @@ $(document).ready(function(){
     $("label").click(function(event){
         console.log("unit toggle clicked")
         console.log(event.target)
+        set_units();
+        // unit = $(this).attr("unit")
+        // short_unit = $(this).attr("short_unit")
+        // wind_speed_unit = $(this).attr("wind_speed_unit")
 
-        unit = $(this).attr("unit")
-        short_unit = $(this).attr("short_unit")
-        wind_speed_unit = $(this).attr("wind_speed_unit")
-
-        data["units"] = unit
-        data["id"] = current_id
+        // data["units"] = unit
+        // data["id"] = current_id
 
         get_weather_response_today(weather_api_query_url, data)
     })
 
     // -- Search for city in searh bar
-    
+    $("#search_form").submit(function(event){
+        event.preventDefault()
+        search_text = $("#search_text").val()
+        console.log("Search for city: " + search_text)
+        delete data["id"]
+        data["q"] = search_text
+    })
 
     // Functions
     // -- display city information
     function display_city_information(){
         $("#ci_city").text(city_name);
         $("#ci_icon_small").attr("src", weather_api_icon_query_url);
-        console.log(temp);
-        console.log(short_unit)
         $("#ci_temp").text(temp)
-        console.log($("#city_unit"))
         $("#ci_unit").text(short_unit)
-        console.log($("#city_info"))
+        console.log("Display city info: " + $("#ci_city").text() + " " + $("#ci_temp").text() + " " + $("#ci_unit").text())
     }
 
     // -- display today weather forecast
@@ -130,12 +133,17 @@ $(document).ready(function(){
         console.log("Get weather response data for today")
         // set units
         set_units()
+        console.log("data: " + JSON.stringify(q_data))
 
         //execute ajax call for weather response
         $.ajax({
             url: url,
             data: q_data,
             method: "GET",
+            sucess: function(){
+                display_city_information()
+                display_today_tab()
+            }
         }).then(function(response) {
             console.log(response);
             // from result store:
@@ -166,9 +174,6 @@ $(document).ready(function(){
             city_id = response.id;
             coord_lon = response.coord.lat;
             coord_lat = response.coord.lon;
-            
-            display_city_information()
-            display_today_tab()
 
         }).fail(function(response){
             console.log(response);
@@ -183,6 +188,7 @@ $(document).ready(function(){
         wind_speed_unit = $(".active").attr("wind_speed_unit")
         default_data["units"] = unit;
         data["units"] = unit;
+        console.log("Set units to : " + unit )
     }
 
     // display today's weather with default city and units
