@@ -34,12 +34,14 @@
         <h3 class="d-inline col-5">Weather Dashboard</h3>
         <!-- <img class="ci-icon-small" src="https://via.placeholder.com/35x30.png"> -->
         <!-- <input class="d-inline" value="Enter city" type="text"></input> -->
-        <div class="input-group col-3 mb-3">
-             <input type="text" class="form-control" placeholder="Enter City" aria-label="Enter City" aria-describedby="button-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" id="button-addon2">Search</button>
+        <form id="search_form" class ="col-3" action="#">
+            <div class="input-group mb-3">
+                <input id="search_text" type="text" class="form-control" placeholder="Enter City" aria-label="Enter City" aria-describedby="search_button">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit" id="search_button">Search</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
     <hr>
     <div class="container-fluid">
@@ -137,6 +139,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="./assets/js/city_list.js"></script>
     <script type="text/javascript" src="./assets/js/weather-script.js"></script>
 </body>
 
