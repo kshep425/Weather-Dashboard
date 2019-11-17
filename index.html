@@ -30,11 +30,16 @@
 <body>
 
     <div id="navigation-bar" class="d-flex justify-content-between">
-        <h3 class="d-inline">KDS Dream Tech</h3>
-        <h3 class="d-inline">Weather Dashboard</h3>
+        <h3 class="d-inline col-4">KDS Dream Tech</h3>
+        <h3 class="d-inline col-5">Weather Dashboard</h3>
         <!-- <img class="ci-icon-small" src="https://via.placeholder.com/35x30.png"> -->
-        <input class="d-inline" value="Enter city, state zip"></input>
-    </div>
+        <!-- <input class="d-inline" value="Enter city" type="text"></input> -->
+        <div class="input-group col-3 mb-3">
+             <input type="text" class="form-control" placeholder="Enter City" aria-label="Enter City" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" id="button-addon2">Search</button>
+            </div>
+        </div>
     </div>
     <hr>
     <div class="container-fluid">
@@ -57,15 +62,22 @@
         <div class="row">
             <div id="city_info" class="d-flex col-12">
 
-                <h2 id="ci_city_state" class="">
+                <h2 id="ci_city_state">
                     <span id=ci_city>Columbia</span>, <span id="ci_state">MD</span>
                 </h2>
 
-                <img id="ci_icon_small" class="mx-1" src="https://via.placeholder.com/35x20.png">
+                <img id="ci_icon_small" class="mx-1" src="">
 
-                <h2 id="ci_temp" class="d-inline">13° F</h2>
+                <h2 class="d-inline"><span id="ci_temp"></span><span id="ci_unit"></span></h2>
 
-                <button id="c_f_toggle" class="btn ml-auto" unit="Farenheit" short_unit="° F">Celcius</button>
+                <div id="c_f_toggle" class="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
+                    <label class="btn btn-secondary c_f_toggle active" unit="imperial" short_unit="° F" wind_speed_unit="MPH">
+                        <input class="c_f_toggle" type="radio" name="options" id="option1" autocomplete="off" unit="imperial" short_unit="° F" wind_speed_unit="MPH" checked> Farenheit
+                    </label>
+                    <label class="btn btn-secondary c_f_toggle" unit="metric" short_unit="° C" wind_speed_unit="KPH">
+                        <input class="c_f_toggle" type="radio" name="options" id="option2" autocomplete="off" unit="metric" short_unit="° C" wind_speed_unit="KPH"> Celcius
+                    </label>
+                </div>
 
             </div>
 
@@ -89,18 +101,6 @@
                 <div class="tab-content" id="weather_forecasts">
                     <div id="today" class="tab-pane fade show active" role="tabpanel"
                         aria-labelledby="todays_forecast_tab">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa, at! Error perspiciatis
-                        sequi? Provident aspernatur autem saepe eligendi et, possimus atque suscipit repudiandae quo
-                        quaerat?
-                        Minima, laborum fuga ipsa dignissimos dolor iusto placeat quas eligendi architecto reprehenderit
-                        distinctio? Blanditiis quaerat ratione voluptate dolorum assumenda possimus pariatur fugiat
-                        quas,
-                        doloribus vero corporis suscipit, sed laborum? Ut nesciunt maxime pariatur eveniet aliquam modi
-                        doloribus neque molestias, atque eaque quam fugiat doloremque. Deleniti dolore error dolores
-                        quae labore
-                        aspernatur esse ratione maiores nam suscipit nulla reiciendis, fugit neque explicabo! Aut eaque
-                        eos
-                        aperiam ad repellat expedita ipsum, est recusandae saepe velit.
                     </div>
                     <div class="tab-pane fade" id="f3_day" role="tabpanel" aria-labelledby="3_day_forecast_tab">
                         ..3-day.
