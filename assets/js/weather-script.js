@@ -1,4 +1,6 @@
-let query_url, default_data, coord_lon, coord_lat, 
+// declare variables
+let query_url, default_data, data,
+coord_lon, coord_lat,
 weather_description, weather_icon, weather_short_description,
 temp, humidity, 
 wind_speed, wind_deg,
@@ -7,40 +9,73 @@ date_time,
 opencagedata_url, opencagedata_api_key,
 weather_api_query_url, weather_api_icon_query_url,
 today_tab, f_3_day_tab, f_5_day_tab,
-farenheit, wind_dir_icon;
+farenheit, wind_dir_icon,
+unit, short_unit,
+ci_city, ci_state, ci_icon_small, ci_temp, ci_unit;
+
+// set wind_dir_icon to north pointing double arrow
 wind_dir_icon = "⇑"
 
-// Move between tabs
 $(document).ready(function(){
-
+    // set variables
     today_tab = $("#today");
     f_3_day_tab = $("#f3_day");
     f_5_day_tab = $("#f5_day");
-
-    farenheit = "imperial"
-    celcius = "metric"
     weather_api_query_url = "https://api.openweathermap.org/data/2.5/weather";
+    app_id = "f16525c1c6fcefe387680a252092b626"
+    current_id = "4352053"
     default_data = {
-        "appid": "f16525c1c6fcefe387680a252092b626",
-        "units": farenheit,
+        "appid": app_id,
         "id": "4352053",
     }
-    
+    data = {
+        "appid": app_id,
+        "id": current_id,
+    }
 
     opencagedata_url = "https://api.opencagedata.com/geocode/v1/json?key=5b3d9ef1aa714124b8cefb0850ad8ec8&pretty=1&no_annotations=1&q=" + coord_lat + "%2C+" + coord_lon;
 
-    $("#forecast_summaries a").on("click", function(e){
 
+    // Click functions
+    // -- display forecast tabs
+    $("#forecast_summaries a").on("click", function(e){
         e.preventDefault();
-        console.log(e)
-        console.log(this)
+        console.log("Display " + $(this).text())
         $(this).tab("show");
     })
 
+    // -- set C or F units based on toggle button
+    $("label").click(function(event){
+        console.log("unit toggle clicked")
+        console.log(event.target)
+
+        unit = $(this).attr("unit")
+        short_unit = $(this).attr("short_unit")
+        wind_speed_unit = $(this).attr("wind_speed_unit")
+
+        data["units"] = unit
+        data["id"] = current_id
+
+        get_weather_response_today(weather_api_query_url, data)
+    })
+
+    // -- Search for city in searh bar
     
 
+    // Functions
+    // -- display city information
+    function display_city_information(){
+        $("#ci_city").text(city_name);
+        $("#ci_icon_small").attr("src", weather_api_icon_query_url);
+        console.log(temp);
+        console.log(short_unit)
+        $("#ci_temp").text(temp)
+        console.log($("#city_unit"))
+        $("#ci_unit").text(short_unit)
+        console.log($("#city_info"))
+    }
 
-    //display today weather for Columbia, MD
+    // -- display today weather forecast
     function display_today_tab(){
         // query for Columbia default URL
         console.log(temp)
@@ -50,7 +85,8 @@ $(document).ready(function(){
 
         // main temp row - contains large image, temp with short unit, and short description
         let weather_image_large = $("<img>").attr("src", weather_api_icon_query_url).addClass("icon_large")
-        let main_temp_row = $("<h1>").text(Math.floor(temp) + $("#c_f_toggle").attr("short_unit") + " " + weather_short_description);
+
+        let main_temp_row = $("<h1>").text(temp + short_unit + " " + weather_short_description);
         main_temp_row.addClass("d-inline")
 
         // weather_detail_row
@@ -61,8 +97,9 @@ $(document).ready(function(){
         wind_details.attr("id", "wind_details")
         wind_details.addClass("col-3 text-center")
         wind_details.attr("style", "position:relative") // add position relative so the "⇑" can be positioned relative to it.
-        wind_details.text(wind_speed + " MPH")
-        
+        console.log("87: " + wind_speed_unit)
+        wind_details.text(wind_speed + " " + wind_speed_unit)
+        console.log("wind_direction: " + wind_deg + " deg" )
         wind_icon_style = {
             "transform": "rotate(" + wind_deg + "deg)",
             "position": "absolute"          // add position absolute so it positioned relative to the wind_details
@@ -88,13 +125,16 @@ $(document).ready(function(){
         today_tab.append(weather_detail_row);
     }
 
+    // -- get today weather forecast
+    function get_weather_response_today(url, q_data){
+        console.log("Get weather response data for today")
+        // set units
+        set_units()
 
-    function get_weather_response_today(url, data){
-        
         //execute ajax call for weather response
         $.ajax({
             url: url,
-            data: data,
+            data: q_data,
             method: "GET",
         }).then(function(response) {
             console.log(response);
@@ -105,11 +145,17 @@ $(document).ready(function(){
             weather_api_icon_query_url = "http://openweathermap.org/img/wn/" + weather_icon
             weather_short_description = response.weather[0].main
             // -- main_temp, main_humidity
-            temp = response.main.temp;
+            temp = Math.floor(response.main.temp);
             humidity = response.main.humidity;
 
-            // -- wind_speed, wind_deg,
-            wind_speed = response.wind.speed;
+            // -- wind_speed: comes in as meters per second.  Change to km per hour
+            if (q_data["units"] === "metric"){
+
+                wind_speed = parseFloat(response.wind.speed) * 3.6;
+                wind_speed = wind_speed.toFixed(2); // only have 2 digits in float
+            } else{
+                wind_speed = response.wind.speed;
+            }
             wind_deg = response.wind.deg;
             
             // -- date_time
@@ -121,9 +167,8 @@ $(document).ready(function(){
             coord_lon = response.coord.lat;
             coord_lat = response.coord.lon;
             
+            display_city_information()
             display_today_tab()
-            
-            
 
         }).fail(function(response){
             console.log(response);
@@ -131,8 +176,16 @@ $(document).ready(function(){
         })
     }
 
+    // -- set C/F and windspeed units
+    function set_units(){
+        unit = $(".active").attr("unit")
+        short_unit = $(".active").attr("short_unit")
+        wind_speed_unit = $(".active").attr("wind_speed_unit")
+        default_data["units"] = unit;
+        data["units"] = unit;
+    }
 
-        get_weather_response_today(weather_api_query_url, default_data)
+    // display today's weather with default city and units
+    get_weather_response_today(weather_api_query_url, default_data)
     
-
 }) // document.ready
