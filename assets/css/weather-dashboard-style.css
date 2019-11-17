@@ -4,25 +4,36 @@ body {
     border: 1px solid black;
     box-shadow: 0 0 10px 10px rgb(0, 0, 0, 0.5) inset;
     color: white;
-    height: 100%;
+    min-height: 100vh;
     width: 100%;
     padding: 15px;
 }
 
-#ci-icon-small {
+#ci_icon_small {
     width: 40px;
     height: 40px;
 }
 
-#c-f-toggle {
+#c_f_toggle {
     height: 40px;
 }
 
-#search-history {
+#search_history {
     background-color: darkorchid;
     height: 100%;
 }
 
-#forecast-summaries {
+#forecast_summaries {
     border: 1px dotted white;
+}
+
+.icon_large {
+    height: 120px;
+    width: 120px
+}
+
+footer {
+    position: absolute;
+    bottom: 0%;
+    /* border-top: 1px solid black; */
 }
