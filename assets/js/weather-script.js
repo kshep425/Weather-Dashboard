@@ -37,14 +37,15 @@ $(document).ready(function(){
 
     // Click functions
     // -- display forecast tabs
-    $("#forecast_summaries a").on("click", function(e){
-        e.preventDefault();
+    $("#forecast_summaries a").on("click", function(event){
+        event.preventDefault();
         console.log("Display " + $(this).text())
         $(this).tab("show");
     })
 
     // -- set C or F units based on toggle button
     $("label").click(function(event){
+        event.preventDefault()
         console.log("unit toggle clicked")
         console.log(event.target)
         unit = $(this).attr("unit")
@@ -71,23 +72,22 @@ $(document).ready(function(){
         console.log("Search for city: " + search_text)
         delete data["id"]
         data["q"] = search_text
+        $("#search_history").addClass("d-none")
 
         get_weather_response_today(weather_api_query_url, data)
-        $("#search_history").addClass("d-none")
-        add_to_searches()
-    })
+    });
 
     // -- Search by id
-    $(".search_list_item").click(function search_by_id(event){
+    $("#search_history").click(function (event){
         event.preventDefault();
-        console.log("Search by id: ")
-        console.log(event.target)
-        console.log($(this))
-        data["id"] = "";
-        delete data["q"];
-        get_weather_response_today(weather_api_query_url, data)
+        if ($(event.target).attr("class").includes("search_list_item")){
+            sli_id = $(event.target).attr("id") // search list item (sli) id
+            console.log("Search by id: " + sli_id)
+            data["id"] = sli_id;
+            delete data["q"];
+            get_weather_response_today(weather_api_query_url, data)
+        }
     })
-
 
     // Functions
     // -- display city information
@@ -197,13 +197,12 @@ $(document).ready(function(){
             //current_id
             current_id = response.id;
             data["id"] = current_id
-
-        }).then(function(){
-            display_complete("Finished getting response")
         }).then(function(){
             state = get_state(coord_lat, coord_lon);
         }).then(function(){
             display_today_tab()
+        }).then(function(){
+            display_complete("Finished getting response")
         }).fail(function(response){
             console.log(response)
             alert("Query Failed");
@@ -236,6 +235,8 @@ $(document).ready(function(){
             display_complete("Finished Getting State")
         }).then(function(response) {
             display_city_information()
+        }).then(function(response) {
+            add_to_searches();
         }).fail(function(response){
             console.log(response)
             alert("Query Failed");
@@ -269,6 +270,7 @@ $(document).ready(function(){
         recent_search_list_item.addClass("list-group-item list-group-item-action search_list_item");
         recent_search_list_item.text(formatted);
         $("#recent_list_header").after(recent_search_list_item)
+        console.log($(".search_list_item"))
         console.log(recent_searches)
         display_complete("Finished Adding to Searches")
     }
