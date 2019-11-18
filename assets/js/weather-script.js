@@ -24,6 +24,7 @@ $(document).ready(function(){
     weather_api_query_url = "https://api.openweathermap.org/data/2.5/weather";
     app_id = "f16525c1c6fcefe387680a252092b626"
     current_id = "4352053"
+
     default_data = {
         "appid": app_id,
         "id": "4352053",
@@ -49,11 +50,11 @@ $(document).ready(function(){
         console.log("unit toggle clicked")
         console.log(event.target)
         set_units();
-        // unit = $(this).attr("unit")
-        // short_unit = $(this).attr("short_unit")
-        // wind_speed_unit = $(this).attr("wind_speed_unit")
+        unit = $(this).attr("unit")
+        short_unit = $(this).attr("short_unit")
+        wind_speed_unit = $(this).attr("wind_speed_unit")
 
-        // data["units"] = unit
+        data["units"] = unit
         // data["id"] = current_id
 
         get_weather_response_today(weather_api_query_url, data)
@@ -131,8 +132,6 @@ $(document).ready(function(){
     // -- get today weather forecast
     function get_weather_response_today(url, q_data){
         console.log("Get weather response data for today")
-        // set units
-        set_units()
         console.log("data: " + JSON.stringify(q_data))
 
         //execute ajax call for weather response
@@ -140,10 +139,6 @@ $(document).ready(function(){
             url: url,
             data: q_data,
             method: "GET",
-            sucess: function(){
-                display_city_information()
-                display_today_tab()
-            }
         }).then(function(response) {
             console.log(response);
             // from result store:
@@ -175,6 +170,8 @@ $(document).ready(function(){
             coord_lon = response.coord.lat;
             coord_lat = response.coord.lon;
 
+            display_city_information()
+            display_today_tab()
         }).fail(function(response){
             console.log(response);
             alert("Query Failed");
@@ -190,6 +187,8 @@ $(document).ready(function(){
         data["units"] = unit;
         console.log("Set units to : " + unit )
     }
+    //set_units
+    set_units()
 
     // display today's weather with default city and units
     get_weather_response_today(weather_api_query_url, default_data)
