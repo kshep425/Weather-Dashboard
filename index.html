@@ -47,28 +47,26 @@
     <div class="container-fluid">
         <!-- Put Search History as a right side bar -->
         <div id="search_history" class="col-3 float-right d-none">
-            <div id="recent_searches">
-                <ul>
-                    <li>Recent Searches</li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <ul>
-                    <li>Popular Searches</li>
-                    <li></li>
-                    <li></li>
+            <div id="recent_searches" >
+                <ul id="recent_searches_list" class="list-group">
+                    <li id="recent_list_header" class="list-group-item list-group-item-secondary h5 recent">Recent Searches</li>
                 </ul>
             </div>
-            <div id="popular_searches"></div>
+            <div id="popular_searches">
+                <ul id="popular_searches_list" class="list-group">
+                    <li class="list-group-item list-group-item-secondary h5">Popular Searches</li>
+                </ul>
+            </div>
         </div>
         <div class="row">
             <div id="city_info" class="d-flex col-12">
 
                 <h2 id="ci_city_state">
-                    <span id=ci_city>Columbia</span>, <span id="ci_state">MD</span>
+                    <span id="ci_city">Columbia</span>, <span id="ci_state">MD</span>
+                    <span id="ci_country">USA</span>
                 </h2>
 
-                <img id="ci_icon_small" class="mx-1" src="">
+                <img id="ci_icon_small" class="mx-1" src="http://openweathermap.org/img/wn/01n.png">
 
                 <h2 class="d-inline"><span id="ci_temp"></span><span id="ci_unit"></span></h2>
 
