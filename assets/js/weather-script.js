@@ -4,14 +4,15 @@ coord_lon, coord_lat,
 weather_description, weather_icon, weather_short_description,
 temp, humidity, 
 wind_speed, wind_deg,
-city_name, city_id,
+city_name, city_id, state,
 date_time,
 opencagedata_url, opencagedata_api_key,
 weather_api_query_url, weather_api_icon_query_url,
 today_tab, f_3_day_tab, f_5_day_tab,
 farenheit, wind_dir_icon,
 unit, short_unit,
-ci_city, ci_state, ci_icon_small, ci_temp, ci_unit;
+ci_city, ci_state, ci_icon_small, ci_temp, ci_unit,
+recent_searches, popular_searches;
 
 // set wind_dir_icon to north pointing double arrow
 wind_dir_icon = "⇑"
@@ -34,9 +35,6 @@ $(document).ready(function(){
         "id": current_id,
     }
 
-    opencagedata_url = "https://api.opencagedata.com/geocode/v1/json?key=5b3d9ef1aa714124b8cefb0850ad8ec8&pretty=1&no_annotations=1&q=" + coord_lat + "%2C+" + coord_lon;
-
-
     // Click functions
     // -- display forecast tabs
     $("#forecast_summaries a").on("click", function(e){
@@ -49,40 +47,64 @@ $(document).ready(function(){
     $("label").click(function(event){
         console.log("unit toggle clicked")
         console.log(event.target)
-        set_units();
         unit = $(this).attr("unit")
         short_unit = $(this).attr("short_unit")
         wind_speed_unit = $(this).attr("wind_speed_unit")
 
         data["units"] = unit
         // data["id"] = current_id
-
+        console.log("Set units to : " + unit )
         get_weather_response_today(weather_api_query_url, data)
     })
 
-    // -- Search for city in searh bar
+    // -- Open search bar when search is selected
+    $("input#search_text").focus(function(event){
+        event.preventDefault();
+        console.log("Open Recent Searches List");
+        $("#search_history").removeClass("d-none");
+    });
+
+    // -- Search for city
     $("#search_form").submit(function(event){
         event.preventDefault()
         search_text = $("#search_text").val()
         console.log("Search for city: " + search_text)
         delete data["id"]
         data["q"] = search_text
+
+        get_weather_response_today(weather_api_query_url, data)
+        $("#search_history").addClass("d-none")
+        add_to_searches()
     })
+
+    // -- Search by id
+    $(".search_list_item").click(function search_by_id(event){
+        event.preventDefault();
+        console.log("Search by id: ")
+        console.log(event.target)
+        console.log($(this))
+        data["id"] = "";
+        delete data["q"];
+        get_weather_response_today(weather_api_query_url, data)
+    })
+
 
     // Functions
     // -- display city information
     function display_city_information(){
         $("#ci_city").text(city_name);
+        $("#ci_state").text(state);
+        $("#ci_country").text(country);
         $("#ci_icon_small").attr("src", weather_api_icon_query_url);
         $("#ci_temp").text(temp)
         $("#ci_unit").text(short_unit)
-        console.log("Display city info: " + $("#ci_city").text() + " " + $("#ci_temp").text() + " " + $("#ci_unit").text())
+        display_complete("Finished displaying city info: " + $("#ci_city").text() + " " + $("#ci_temp").text() + " " + $("#ci_unit").text())
     }
 
     // -- display today weather forecast
     function display_today_tab(){
+        console.log("Format Today Tab")
         // query for Columbia default URL
-        console.log(temp)
         today_tab.empty();
         //date_time_row = $("<div>").addClass("row text-left")
         let date_time_h5 = $("<h5>").text(moment.unix(date_time).format("hh:mm A MM/DD/YYYY"));
@@ -101,9 +123,8 @@ $(document).ready(function(){
         wind_details.attr("id", "wind_details")
         wind_details.addClass("col-3 text-center")
         wind_details.attr("style", "position:relative") // add position relative so the "⇑" can be positioned relative to it.
-        console.log("87: " + wind_speed_unit)
         wind_details.text(wind_speed + " " + wind_speed_unit)
-        console.log("wind_direction: " + wind_deg + " deg" )
+        // console.log("wind_direction: " + wind_deg + " deg at " + wind_details.text() )
         wind_icon_style = {
             "transform": "rotate(" + wind_deg + "deg)",
             "position": "absolute"          // add position absolute so it positioned relative to the wind_details
@@ -127,6 +148,8 @@ $(document).ready(function(){
         today_tab.append(weather_image_large);
         today_tab.append(main_temp_row);
         today_tab.append(weather_detail_row);
+
+        display_complete("Finished displaying today tab")
     }
 
     // -- get today weather forecast
@@ -167,13 +190,22 @@ $(document).ready(function(){
             // -- location info
             city_name = response.name;
             city_id = response.id;
-            coord_lon = response.coord.lat;
-            coord_lat = response.coord.lon;
+            coord_lon = response.coord.lon;
+            coord_lat = response.coord.lat;
+            country = response.sys.country;
 
-            display_city_information()
+            //current_id
+            current_id = response.id;
+            data["id"] = current_id
+
+        }).then(function(){
+            display_complete("Finished getting response")
+        }).then(function(){
+            state = get_state(coord_lat, coord_lon);
+        }).then(function(){
             display_today_tab()
         }).fail(function(response){
-            console.log(response);
+            console.log(response)
             alert("Query Failed");
         })
     }
@@ -186,7 +218,65 @@ $(document).ready(function(){
         default_data["units"] = unit;
         data["units"] = unit;
         console.log("Set units to : " + unit )
+        display_complete("Finished Setting Units")
     }
+
+    function get_state(lat,long){
+        console.log("Get state based on lat: " + lat + "& long: " + long + " coordinates")
+        opencagedata_url = "https://api.opencagedata.com/geocode/v1/json?key=5b3d9ef1aa714124b8cefb0850ad8ec8&pretty=1&no_annotations=1&q=" + lat + "%2C+" + long;
+        $.ajax({
+            url: opencagedata_url,
+            method: "GET",
+        }).then(function(response) {
+            console.log(response);
+            state = response.results[0].components.state;
+            console.log("State: " + state);
+            return state;
+        }).then(function(response) {
+            display_complete("Finished Getting State")
+        }).then(function(response) {
+            display_city_information()
+        }).fail(function(response){
+            console.log(response)
+            alert("Query Failed");
+        });
+
+    }
+
+    function add_to_searches(){
+        recent_searches = localStorage.getItem("recent_searches");
+        // Add to local storage
+        if (recent_searches === null){
+            recent_searches = {}
+        } else {
+            recent_searches = JSON.parse(recent_searches)
+        };
+
+        let formatted = city_name + ", " + state + " " + country
+        if (recent_searches[current_id] === undefined){
+            recent_searches[current_id] = {count: 1, formatted: formatted}
+        } else {
+            console.log("searched before")
+            count = parseInt(recent_searches[current_id].count)
+            recent_searches[current_id].count = count + 1;
+        }
+        localStorage.setItem("recent_searches", JSON.stringify(recent_searches))
+
+        // Add to recent searches list display
+        let recent_search_list_item = $("<a>");
+        recent_search_list_item.attr("id", current_id);
+        recent_search_list_item.attr("href", "#")
+        recent_search_list_item.addClass("list-group-item list-group-item-action search_list_item");
+        recent_search_list_item.text(formatted);
+        $("#recent_list_header").after(recent_search_list_item)
+        console.log(recent_searches)
+        display_complete("Finished Adding to Searches")
+    }
+
+    function display_complete(msg){
+        console.log(msg)
+    }
+
     //set_units
     set_units()
 
