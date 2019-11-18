@@ -23,6 +23,10 @@ body {
     height: 100%;
 }
 
+.list-group-item-action {
+    color: black;
+}
+
 #forecast_summaries {
     border: 1px dotted white;
 }
