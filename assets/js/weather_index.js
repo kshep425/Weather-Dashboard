@@ -34,7 +34,7 @@ const appendAll = (parent, ...children) => {
  *
  */
 const weather_api = {
-  key: "f16525c1c6fcefe387680a252092b626",
+  key: "0cd120b5a3fb267b2e15e0ccf0932a56",
   uri: "https://api.openweathermap.org/data/2.5",
   iconUri: "http://openweathermap.org/img/wn/"
 };
@@ -43,16 +43,37 @@ const weather_query_url = type =>
   `${weather_api.uri}/${type}`;
 
 let query_data = {
-    "id": weather_api.key
+    APPID: "0cd120b5a3fb267b2e15e0ccf0932a56"
 }
 
-const weather_query = (type, q_data) =>
-  $.ajax({
-    type: "GET",
-    url: `${query_url(type)}`,
-    data: `${q_data}`,
-    crossDomain: true
-  }).then(r => {
-    console.log("request", r);
-    return r;
-  });
+/**
+ * Creates a Weather API Query and returns result
+ * @param {string} q_type type can be 'forecast' or 'weather'
+ * @param {string} q_data this is the query data object
+ * @returns the query response
+ */
+const weather_query = (q_type, q_data) => {
+    $.ajax({
+        url: `${weather_query_url(q_type)}`,
+        data: q_data,
+        method: "GET"
+        //crossDomain: true
+
+    }).then(function (response) {
+        console.log(response);
+        localStorage.setItem("forecast", JSON.stringify(response));
+    }).then(function (response){
+        display_five_day_forecast();
+    }).fail(function(err){
+        console.log(err);
+        alert("An error occured");
+    });
+}
+
+function display_five_day_forecast(){
+    console.log("Start adding items to cards");
+    result = JSON.parse(localStorage.getItem("forecast"));
+    console.log(result);
+
+    
+}

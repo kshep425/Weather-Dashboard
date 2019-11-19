@@ -7,8 +7,8 @@ $(document).ready(function(){
     days.forEach((day, i) => {
         console.log(i + ".  Create card for: " + day)
         const weather_card = divOf(
-        "card d-block my-3 " + day, 
-        {"border": "1px red solid", "background-color": "yellow"},
+            "card d-block my-3 " + day, 
+            {"border": "1px red solid", "background-color": "yellow"},
         )
 
         const weather_card_body = divOf(
@@ -33,5 +33,26 @@ $(document).ready(function(){
 
     });
 
-// get query results
-});
+
+
+    // get query results
+    $("#forecast_summaries").click(function(event) {
+        event.preventDefault()
+        const five_day_forecast = "forecast";
+        delete query_data["q"]
+        query_data["id"] = current_id;
+        query_data["units"] = unit;
+
+        console.log("Search for 5 day forecast")
+        console.log(`${weather_query_url(five_day_forecast)}`)
+        console.log(query_data)
+        
+        weather_query
+        (five_day_forecast, query_data)        
+    })
+
+    
+
+    // add card text to elements based on query results
+    
+}); // document.ready
