@@ -5,7 +5,7 @@ body {
     box-shadow: 0 0 10px 10px rgb(0, 0, 0, 0.5) inset;
     color: white;
     min-height: 100vh;
-    width: 100%;
+    width: 100vw;
     padding: 15px;
 }
 
@@ -36,7 +36,100 @@ body {
 }
 
 footer {
+    display: none;
+    /* border-top: 1px solid black; */
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    body {
+        background-color: blue;
+    }
+
+    footer {
     position: absolute;
     bottom: 0%;
     /* border-top: 1px solid black; */
+}
+ }
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    body {
+        background-color: AliceBlue;
+        color: black;
+    }
+
+    footer {
+        position: absolute;
+        bottom: 0%;
+        /* border-top: 1px solid black; */
+    }
+
+    .card {
+        width: 17%;
+        float: left;
+        margin: 1.5%
+    }
+
+    .weather_card_image {
+        width: 95%
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    footer {
+        position: absolute;
+        bottom: 0%;
+        /* border-top: 1px solid black; */
+    }
+
+    .card {
+        width: 17%;
+        float: left;
+        margin: 1.5%
+    }
+
+    .weather_card_image {
+        width: 95%
+        border: 1px solid black;
+    }
+
+    body {
+        background-color: Beige;
+        color: black;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    footer {
+        position: absolute;
+        bottom: 0%;
+        /* border-top: 1px solid black; */
+    }
+
+    body {
+        background-color: CadetBlue;
+        border: 1px solid black;
+        box-shadow: 0 0 10px 10px rgb(0, 0, 0, 0.5) inset;
+        color: black;
+        min-height: 100vh;
+        width: 100%;
+        padding: 15px;
+    }
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    footer {
+        position: absolute;
+        bottom: 0%;
+        /* border-top: 1px solid black; */
+    }
+
+    body {
+        background-color: DarkBlue;
+    }
 }
