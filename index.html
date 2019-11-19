@@ -29,12 +29,12 @@
 
 <body>
 
-    <div id="navigation-bar" class="d-flex justify-content-between">
-        <h3 class="d-inline col-4">KDS Dream Tech</h3>
-        <h3 class="d-inline col-5">Weather Dashboard</h3>
+    <div id="navigation-bar" class="d-block text-center d-sm-flex justify-content-between">
+        <h3 class="d-inline-md col-4-md">KDS Dream Tech</h3>
+        <h3 class="d-inline-md col-5-md">Weather Dashboard</h3>
         <!-- <img class="ci-icon-small" src="https://via.placeholder.com/35x30.png"> -->
         <!-- <input class="d-inline" value="Enter city" type="text"></input> -->
-        <form id="search_form" class ="col-3" action="#">
+        <form id="search_form" class ="col-3-md" action="#">
             <div class="input-group mb-3">
                 <input id="search_text" type="text" class="form-control" placeholder="Enter City" aria-label="Enter City" aria-describedby="search_button">
                 <div class="input-group-append">
@@ -46,7 +46,7 @@
     <hr>
     <div class="container-fluid">
         <!-- Put Search History as a right side bar -->
-        <div id="search_history" class="col-3 float-right d-none">
+        <div id="search_history" class="col col-md-3 float-md-right d-none">
             <div id="recent_searches" >
                 <ul id="recent_searches_list" class="list-group">
                     <li id="recent_list_header" class="list-group-item list-group-item-secondary h5 recent">Recent Searches</li>
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="row">
-            <div id="city_info" class="d-flex col-12">
+            <div id="city_info" class="d-block text-center d-sm-flex col-12">
 
                 <h2 id="ci_city_state">
                     <span id="ci_city">Columbia</span>, <span id="ci_state">MD</span>
@@ -70,7 +70,7 @@
 
                 <h2 class="d-inline"><span id="ci_temp"></span><span id="ci_unit"></span></h2>
 
-                <div id="c_f_toggle" class="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
+                <div id="c_f_toggle" class="btn-group btn-group-toggle d-block ml-auto" data-toggle="buttons">
                     <label class="btn btn-secondary c_f_toggle active" unit="imperial" short_unit="° F" wind_speed_unit="mi/h">
                         <input class="c_f_toggle" type="radio" name="options" id="option1" autocomplete="off" unit="imperial" short_unit="° F" wind_speed_unit="mi/h" checked> Farenheit
                     </label>
@@ -87,7 +87,7 @@
         <div class="row">
             <!-- Have today, 3-day forecast, and 5-day forecast tabs -->
             <div id="forecast_summaries" class="col-12">
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs flex-column flex-sm-row"">
                     <li class="nav-item">
                         <a class="nav-link active" href="#today" data-toggle="tab" role="tab">Today</a>
                     </li>
@@ -106,7 +106,6 @@
                         ..3-day.
                     </div>
                     <div class="tab-pane fade" id="f5_day" role="tabpanel" aria-labelledby="5_day_forecast_tab">
-                        ..5-day.
                     </div>
                 </div>
             </div>
@@ -137,8 +136,10 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script type="text/javascript" src="./assets/js/city_list.js"></script>
+    <!-- <script type="text/javascript" src="./assets/js/city_list.json"></script> -->
+    <script type="text/javascript" src="./assets/js/weather_index.js"></script>
     <script type="text/javascript" src="./assets/js/weather-script.js"></script>
+    <script type="text/javascript" src="./assets/js/weather_script_5_day.js"></script>
 </body>
 
 </html>
