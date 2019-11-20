@@ -28,9 +28,9 @@ const appendAll = (parent, ...children) => {
   return parent;
 };
 
-  
+
 /**
- * Create Weather Api   
+ * Create Weather Api
  *
  */
 const weather_api = {
@@ -62,18 +62,44 @@ const weather_query = (q_type, q_data) => {
     }).then(function (response) {
         console.log(response);
         localStorage.setItem("forecast", JSON.stringify(response));
-    }).then(function (response){
-        display_five_day_forecast();
+    }).done(function (response){
+        var weather = get_five_day_forecast();
     }).fail(function(err){
         console.log(err);
         alert("An error occured");
     });
 }
 
-function display_five_day_forecast(){
+function get_five_day_forecast(){
     console.log("Start adding items to cards");
     result = JSON.parse(localStorage.getItem("forecast"));
     console.log(result);
+    num = [4,12,20,28,36]
+    num.forEach((n,i) => {
+        card_details = result.list[n]
+        weather = {
+            temperature: card_details.main.temp,
+            date_time: card_details.dt_txt,
+            wind: card_details.wind,
+            humidity: card_details.main.humidity,
+            short_desc: card_details.weather[0].main,
+            icon: card_details.weather[0].icon
+        }
+        addToCard(weather, i + 1)
+    });
 
-    
+}
+
+function addToCard(weather_info, day){
+    console.log(weather_info)
+    d = ".day_" + day
+    console.log(d)
+    $(".card-header" + d).text(weather_info.date_time);
+    $(".weather_card_image" + d).attr("src", weather_api.iconUri + weather_info.icon + ".png");
+    $(".short_desc" + d).text(weather_info.short_desc);
+    $(".temperature" + d).text(Math.floor(weather_info.temperature) + $("#ci_unit").text());
+    $(".humidity" + d).text(weather_info.humidity + "% Humidity");
+    $(".wind" + d).text(weather_info.wind.speed  + " " + wind_speed_unit);
+    $(".wind_icon" + d).css({"transform": "rotate(" + weather_info.wind.deg + "deg)"});
+
 }
