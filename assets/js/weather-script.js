@@ -2,7 +2,7 @@
 let query_url, default_data, data,
 coord_lon, coord_lat,
 weather_description, weather_icon, weather_short_description,
-temp, humidity, 
+temp, humidity,
 wind_speed, wind_deg,
 city_name, city_id, state,
 date_time,
@@ -46,8 +46,7 @@ $(document).ready(function(){
     // -- set C or F units based on toggle button
     $("label").click(function(event){
         event.preventDefault()
-        console.log("unit toggle clicked")
-        console.log(event.target)
+        console.log("C-F unit toggle clicked")
         unit = $(this).attr("unit")
         short_unit = $(this).attr("short_unit")
         wind_speed_unit = $(this).attr("wind_speed_unit")
@@ -117,7 +116,7 @@ $(document).ready(function(){
 
         // weather_detail_row
         let weather_detail_row = $("<h6>").addClass("row")
-        
+
         // -- wind_details:  Add wind speed and rotate the double arrow based on degrees, place in same column.
         let wind_details = $("<h6>")
         wind_details.attr("id", "wind_details")
@@ -183,7 +182,7 @@ $(document).ready(function(){
                 wind_speed = response.wind.speed;
             }
             wind_deg = response.wind.deg;
-            
+
             // -- date_time
             date_time = response.dt;
 
@@ -227,7 +226,6 @@ $(document).ready(function(){
             url: opencagedata_url,
             method: "GET",
         }).then(function(response) {
-            console.log(response);
             state = response.results[0].components.state;
             console.log("State: " + state);
             return state;
@@ -270,7 +268,6 @@ $(document).ready(function(){
         recent_search_list_item.addClass("list-group-item list-group-item-action search_list_item");
         recent_search_list_item.text(formatted);
         $("#recent_list_header").after(recent_search_list_item)
-        console.log($(".search_list_item"))
         console.log(recent_searches)
         display_complete("Finished Adding to Searches")
     }
@@ -284,5 +281,5 @@ $(document).ready(function(){
 
     // display today's weather with default city and units
     get_weather_response_today(weather_api_query_url, default_data)
-    
+
 }) // document.ready
