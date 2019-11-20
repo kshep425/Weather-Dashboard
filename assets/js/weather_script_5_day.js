@@ -56,17 +56,8 @@ $(document).ready(function(){
             $clone2.appendTo("#f3_day")
 
             console.log($("#f3_day"))
-
         }
-
-
-
-
-
-
     });
-
-
 
     // get query results
     $("#forecast_summaries").click(function(event){
@@ -81,14 +72,12 @@ $(document).ready(function(){
 
     function execute_forecast_query(event) {
         event.preventDefault()
+        console.log("Search for 5 day forecast")
+
         const five_day_forecast = "forecast";
         delete query_data["q"]
         query_data["id"] = current_id;
         query_data["units"] = unit;
-
-        console.log("Search for 5 day forecast")
-        console.log(`${weather_query_url(five_day_forecast)}`)
-        console.log(query_data)
 
         weather_query
         (five_day_forecast, query_data)
