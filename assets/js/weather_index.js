@@ -28,6 +28,13 @@ const appendAll = (parent, ...children) => {
   return parent;
 };
 
+const search_list_item = (search_id, search_formatted) => {
+    let sli = elementOf("a", "list-group-item list-group-item-action search_list_item");
+    sli.attr("id", search_id)
+    sli.text(search_formatted);
+    sli.attr("href", "#");
+    return sli;
+}
 
 /**
  * Create Weather Api
