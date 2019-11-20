@@ -2,9 +2,10 @@
 A Weather Dashboard using Open Weather Map API. 
 
 [Weather Dashboard](https://kshep425.github.io/Weather-Dashboard/)
+<iframe src="https://youtu.be/ThpNylTo9oA" frameborder="0" allowfullscreen></iframe>
 
 ## Description
-Use this weather dashboard to properly prepare for the day.  Search weather contions and look at future outlooks in cities all over the world.  Don't get caught out in the rain!
+Use this weather dashboard to properly prepare for the day.  Search weather conditions and look at future outlooks in cities all over the world.  Don't get caught out in the rain!
 
 ## Usage
 Open the [Weather Dashboard](https://kshep425.github.io/Weather-Dashboard/) and enter a city to view the current weather conditions.
@@ -42,7 +43,8 @@ SOFTWARE.
 N/A
 
 ## Contributing
-N/A
+* [Jono Augustine](https://github.com/JonoAugustine)
+* [Donald Hesler](https://www.linkedin.com/in/davishesler/)
 
 ## Tests
 N/A
