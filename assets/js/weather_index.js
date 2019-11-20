@@ -90,6 +90,7 @@ function get_five_day_forecast(){
 
 }
 
+// add card text to elements based on query results
 function addToCard(weather_info, day){
     console.log(weather_info)
     d = ".day_" + day
@@ -97,7 +98,7 @@ function addToCard(weather_info, day){
     $(".card-header" + d).text(weather_info.date_time);
     $(".weather_card_image" + d).attr("src", weather_api.iconUri + weather_info.icon + ".png");
     $(".short_desc" + d).text(weather_info.short_desc);
-    $(".temperature" + d).text(Math.floor(weather_info.temperature) + $("#ci_unit").text());
+    $(".temperature" + d).text(Math.floor(weather_info.temperature) + short_unit);
     $(".humidity" + d).text(weather_info.humidity + "% Humidity");
     $(".wind" + d).text(weather_info.wind.speed  + " " + wind_speed_unit);
     $(".wind_icon" + d).css({"transform": "rotate(" + weather_info.wind.deg + "deg)"});
