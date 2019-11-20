@@ -69,7 +69,17 @@ $(document).ready(function(){
 
 
     // get query results
-    $("#forecast_summaries").click(function(event) {
+    $("#forecast_summaries").click(function(event){
+        event.preventDefault()
+        execute_forecast_query(event)
+    })
+
+    $("label").click(function(event){
+        event.preventDefault()
+        execute_forecast_query(event)
+    })
+
+    function execute_forecast_query(event) {
         event.preventDefault()
         const five_day_forecast = "forecast";
         delete query_data["q"]
@@ -82,12 +92,5 @@ $(document).ready(function(){
 
         weather_query
         (five_day_forecast, query_data)
-
-
-    })
-
-
-
-    // add card text to elements based on query results
-
+    }
 }); // document.ready
