@@ -40,18 +40,49 @@ footer {
     /* border-top: 1px solid black; */
 }
 
+.wind {
+    position: relative;
+}
+
+.wind_icon {
+    position: absolute;
+}
+
+.weather_card_image {
+    width: 45%;
+    display: block;
+    margin: 3% auto;
+}
+
+.weather_card {
+    text-align: center;
+    color: black;
+}
+
 /* Extra small devices (portrait phones, less than 576px) */
-@media (max-width: 575.98px) {
+@media (min-width: 375px) {
     body {
-        background-color: blue;
+        background-color: orange;
     }
 
     footer {
-    position: absolute;
-    bottom: 0%;
-    /* border-top: 1px solid black; */
+        position: absolute;
+        bottom: 0%;
+        /* border-top: 1px solid black; */
+    }
+
+    .weather_card, .weather_card_header, .weather_card_image, .weather_card_body {
+        all: initial;
+        float: left;
+        margin-right: 3%;
+    }
+
+    .weather_card {
+        background-color: #ffffff;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
 }
- }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
@@ -66,15 +97,15 @@ footer {
         /* border-top: 1px solid black; */
     }
 
-    .card {
-        width: 17%;
+    .weather_card, .weather_card_header, .weather_card_image, .weather_card_body {
+        all: initial;
         float: left;
-        margin: 1.5%
+        margin-right: 3%;
     }
 
-    .weather_card_image {
-        width: 95%
-    }
+
+
+
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -103,7 +134,7 @@ footer {
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) { 
+@media (min-width: 992px) {
     footer {
         position: absolute;
         bottom: 0%;
@@ -111,7 +142,7 @@ footer {
     }
 
     body {
-        background-color: CadetBlue;
+        background-color: violet;
         border: 1px solid black;
         box-shadow: 0 0 10px 10px rgb(0, 0, 0, 0.5) inset;
         color: black;
@@ -119,17 +150,20 @@ footer {
         width: 100%;
         padding: 15px;
     }
+
+    .card {
+        width: 17%;
+        height: 320px;
+        float: left;
+        margin: 1%;
+    }
+
+    .weather_card_header {
+        padding-bottom: 6px;
+    }
+
+    .weather_card_body {
+        padding-top: 0px;
+    }
+
  }
-
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
-    footer {
-        position: absolute;
-        bottom: 0%;
-        /* border-top: 1px solid black; */
-    }
-
-    body {
-        background-color: DarkBlue;
-    }
-}
