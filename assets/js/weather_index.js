@@ -71,9 +71,8 @@ const weather_query = (q_type, q_data) => {
 }
 
 function get_five_day_forecast(){
-    console.log("Start adding items to cards");
+    console.log("Parse the five day forecast response");
     result = JSON.parse(localStorage.getItem("forecast"));
-    console.log(result);
     num = [4,12,20,28,36]
     num.forEach((n,i) => {
         card_details = result.list[n]
@@ -92,9 +91,8 @@ function get_five_day_forecast(){
 
 // add card text to elements based on query results
 function addToCard(weather_info, day){
-    console.log(weather_info)
+    console.log("Add weather info to card")
     d = ".day_" + day
-    console.log(d)
     $(".card-header" + d).text(weather_info.date_time);
     $(".weather_card_image" + d).attr("src", weather_api.iconUri + weather_info.icon + ".png");
     $(".short_desc" + d).text(weather_info.short_desc);
