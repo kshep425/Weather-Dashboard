@@ -235,6 +235,7 @@ $(document).ready(function(){
             display_city_information()
         }).then(function(response) {
             add_to_searches();
+            
         }).fail(function(response){
             console.log(response)
             alert("Query Failed");
@@ -256,20 +257,41 @@ $(document).ready(function(){
             recent_searches[current_id] = {count: 1, formatted: formatted}
         } else {
             console.log("searched before")
-            count = parseInt(recent_searches[current_id].count)
-            recent_searches[current_id].count = count + 1;
+            if ($(".search_list_item:first").text() != formatted){
+                count = parseInt(recent_searches[current_id].count)
+                recent_searches[current_id].count = count + 1;
+            }
         }
         localStorage.setItem("recent_searches", JSON.stringify(recent_searches))
 
         // Add to recent searches list display
-        let recent_search_list_item = $("<a>");
-        recent_search_list_item.attr("id", current_id);
-        recent_search_list_item.attr("href", "#")
-        recent_search_list_item.addClass("list-group-item list-group-item-action search_list_item");
-        recent_search_list_item.text(formatted);
-        $("#recent_list_header").after(recent_search_list_item)
-        console.log(recent_searches)
+        if ($(".search_list_item:first").text() != formatted){
+
+            let recent_search_list_item = $("<a>");
+            recent_search_list_item.attr("id", current_id);
+            recent_search_list_item.attr("href", "#")
+            recent_search_list_item.addClass("list-group-item list-group-item-action search_list_item");
+            recent_search_list_item.text(formatted);
+            $("#recent_list_header").after(recent_search_list_item)
+            console.log(recent_searches)
+        }
+
         display_complete("Finished Adding to Searches")
+    }
+
+    function add_popular_searches(){
+        // Clear popular searches
+
+        // add top 3 recent searches
+        // -- get recent searches, sort by count, take top 3
+
+        // add New york, Los Angeles, and Paris by default
+        const ny = search_list_item("5128638", "New York, NY USA")
+        const la = search_list_item("5368361", "Los Angeles, CA USA")
+        const london = search_list_item("2643743", "London, England GB")
+
+        appendAll($("#popular_searches_list"), ny, la, london)
+
     }
 
     function display_complete(msg){
@@ -282,4 +304,6 @@ $(document).ready(function(){
     // display today's weather with default city and units
     get_weather_response_today(weather_api_query_url, default_data)
 
+    // add popular searches
+    add_popular_searches();
 }) // document.ready
