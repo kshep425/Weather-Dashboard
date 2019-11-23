@@ -2,6 +2,8 @@
  * Create the 5 day forecast cards for media screens
  */
 $(document).ready(function(){
+    execute_forecast_query()
+
     let days = ["day_1", "day_2","day_3","day_4","day_5"];
     let i = 0;
     days.forEach((day, i) => {
@@ -57,6 +59,19 @@ $(document).ready(function(){
 
             console.log($("#f3_day"))
         }
+
+        if (i === 0){
+            console.log(i)
+            // Original element with attached data
+            var $elem3 = $( weather_card ).data( "arr", [ 1 ] ),
+                $clone3 = $elem3.clone( true )
+                // Deep copy to prevent data sharing
+                .data( "arr", $.extend( [], $elem.data( "arr" ) ) );
+            $clone3.appendTo("#today")
+
+            console.log($("#today"))
+        }
+
     });
 
     // get query results
@@ -70,8 +85,8 @@ $(document).ready(function(){
         execute_forecast_query(event)
     })
 
-    function execute_forecast_query(event) {
-        event.preventDefault()
+    function execute_forecast_query() {
+
         console.log("Search for 5 day forecast")
 
         const five_day_forecast = "forecast";
@@ -82,4 +97,5 @@ $(document).ready(function(){
         weather_query
         (five_day_forecast, query_data)
     }
+
 }); // document.ready

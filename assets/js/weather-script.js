@@ -100,57 +100,6 @@ $(document).ready(function(){
         display_complete("Finished displaying city info: " + $("#ci_city").text() + " " + $("#ci_temp").text() + " " + $("#ci_unit").text())
     }
 
-    // -- display today weather forecast
-    function display_today_tab(){
-        console.log("Format Today Tab")
-        // query for Columbia default URL
-        today_tab.empty();
-        //date_time_row = $("<div>").addClass("row text-left")
-        let date_time_h5 = $("<h5>").text(moment.unix(date_time).format("hh:mm A MM/DD/YYYY"));
-
-        // main temp row - contains large image, temp with short unit, and short description
-        let weather_image_large = $("<img>").attr("src", weather_api_icon_query_url).addClass("icon_large")
-
-        let main_temp_row = $("<h1>").text(temp + short_unit + " " + weather_short_description);
-        main_temp_row.addClass("d-inline")
-
-        // weather_detail_row
-        let weather_detail_row = $("<h6>").addClass("row")
-
-        // -- wind_details:  Add wind speed and rotate the double arrow based on degrees, place in same column.
-        let wind_details = $("<h6>")
-        wind_details.attr("id", "wind_details")
-        wind_details.addClass("col-3 text-center")
-        wind_details.attr("style", "position:relative") // add position relative so the "⇑" can be positioned relative to it.
-        wind_details.text(wind_speed + " " + wind_speed_unit)
-        // console.log("wind_direction: " + wind_deg + " deg at " + wind_details.text() )
-        wind_icon_style = {
-            "transform": "rotate(" + wind_deg + "deg)",
-            "position": "absolute"          // add position absolute so it positioned relative to the wind_details
-        }
-        let wind_details_icon = $("<span>")     // span allows the text to stay on the same line
-        wind_details_icon.addClass("ml-3")  // ml-3 adds some separation between the wind speed and the "⇑"
-        wind_details_icon.attr("id", "wind_icon")
-        wind_details_icon.text(wind_dir_icon)
-        wind_details_icon.css(wind_icon_style)
-
-        // -- humidity details
-        let humidity_details = $("<h6>")
-        humidity_details.attr("id", "humidity_details")
-        humidity_details.addClass("col-3 text-center")
-        humidity_details.text(humidity + "% Humidity")
-
-        wind_details.append(wind_details_icon);
-        weather_detail_row.append(wind_details);
-        weather_detail_row.append(humidity_details);
-        today_tab.append(date_time_h5);
-        today_tab.append(weather_image_large);
-        today_tab.append(main_temp_row);
-        today_tab.append(weather_detail_row);
-
-        display_complete("Finished displaying today tab")
-    }
-
     // -- get today weather forecast
     function get_weather_response_today(url, q_data){
         console.log("Get weather response data for today")
@@ -199,8 +148,6 @@ $(document).ready(function(){
         }).then(function(){
             state = get_state(coord_lat, coord_lon);
         }).then(function(){
-            display_today_tab()
-        }).then(function(){
             display_complete("Finished getting response")
         }).fail(function(response){
             console.log(response)
@@ -235,7 +182,7 @@ $(document).ready(function(){
             display_city_information()
         }).then(function(response) {
             add_to_searches();
-            
+
         }).fail(function(response){
             console.log(response)
             alert("Query Failed");
