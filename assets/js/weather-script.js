@@ -148,6 +148,7 @@ $(document).ready(function(){
         }).then(function(){
             state = get_state(coord_lat, coord_lon);
         }).then(function(){
+            get_uvi_data()
             display_complete("Finished getting response")
         }).fail(function(response){
             console.log(response)
@@ -253,4 +254,5 @@ $(document).ready(function(){
 
     // add popular searches
     add_popular_searches();
+
 }) // document.ready
