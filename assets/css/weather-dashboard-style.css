@@ -26,10 +26,6 @@ body {
     color: black;
 }
 
-#forecast_summaries {
-    border: 1px dotted white;
-}
-
 .icon_large {
     height: 120px;
     width: 120px
@@ -56,14 +52,21 @@ footer {
 
 .weather_card {
     text-align: center;
-    color: black;
+}
+
+.weather_card, .weather_card_header, .weather_card_image, .weather_card_body {
+    all: initial;
+    float: left;
+    margin-right: 3%;
+}
+
+.weather_card {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (min-width: 375px) {
-    body {
-        background-color: orange;
-    }
 
     footer {
         position: absolute;
@@ -71,40 +74,16 @@ footer {
         /* border-top: 1px solid black; */
     }
 
-    .weather_card, .weather_card_header, .weather_card_image, .weather_card_body {
-        all: initial;
-        float: left;
-        margin-right: 3%;
-    }
 
-    .weather_card {
-        background-color: #ffffff;
-        border: 1px solid rgba(0,0,0,.125);
-        border-radius: .25rem;
-    }
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
-    body {
-        background-color: AliceBlue;
-        color: black;
-    }
 
     footer {
         position: absolute;
         bottom: 0%;
-        /* border-top: 1px solid black; */
     }
-
-    .weather_card, .weather_card_header, .weather_card_image, .weather_card_body {
-        all: initial;
-        float: left;
-        margin-right: 3%;
-    }
-
-
-
 
 }
 
@@ -113,7 +92,6 @@ footer {
     footer {
         position: absolute;
         bottom: 0%;
-        /* border-top: 1px solid black; */
     }
 
     .card {
@@ -123,14 +101,9 @@ footer {
     }
 
     .weather_card_image {
-        width: 95%
-        border: 1px solid black;
+        width: 95%;
     }
 
-    body {
-        background-color: Beige;
-        color: black;
-    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -142,10 +115,7 @@ footer {
     }
 
     body {
-        background-color: violet;
-        border: 1px solid black;
         box-shadow: 0 0 10px 10px rgb(0, 0, 0, 0.5) inset;
-        color: black;
         min-height: 100vh;
         width: 100%;
         padding: 15px;
