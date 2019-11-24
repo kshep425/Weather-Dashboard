@@ -203,6 +203,14 @@ $(document).ready(function () {
             recent_searches = {}
         } else {
             recent_searches = JSON.parse(recent_searches)
+            Object.keys(recent_searches).forEach(key => {
+                let recent_search_list_item = $("<a>");
+                recent_search_list_item.attr("id", key);
+                recent_search_list_item.attr("href", "#")
+                recent_search_list_item.addClass("list-group-item list-group-item-action search_list_item");
+                recent_search_list_item.text(recent_searches[key].formatted);
+                $("#recent_list_header").after(recent_search_list_item)
+            });
         };
 
         let formatted = city_name + ", " + state + " " + country
