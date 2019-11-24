@@ -28,6 +28,12 @@ const appendAll = (parent, ...children) => {
   return parent;
 };
 
+/**
+ * Creates a Search List Item with id and search text.
+ * @param {string} search_id
+ * @param {string} search_formatted
+ * @returns the created element.
+ */
 const search_list_item = (search_id, search_formatted) => {
     let sli = elementOf("a", "list-group-item list-group-item-action search_list_item");
     sli.attr("id", search_id)
@@ -69,14 +75,14 @@ const weather_query = (q_type, q_data) => {
     }).then(function (response) {
         console.log(response);
         localStorage.setItem(q_type, JSON.stringify(response));
-    }).done(function (response){
+    }).done(function (){
         if (q_type === "forecast"){
             get_five_day_forecast();
         }
         if (q_type === "uvi"){
             get_uvi_data()
         }
-        if (q_type === "uvi/forecast"){
+        if (q_type === "uvi\/forecast"){
             get_uvi_forecast()
         }
     }).fail(function(err){
@@ -88,7 +94,7 @@ const weather_query = (q_type, q_data) => {
 function get_five_day_forecast(){
     console.log("Parse the five day forecast response");
     let result = JSON.parse(localStorage.getItem("forecast"));
-    num = [4,12,20,28,36]
+    num = [0,1,2,3,4,5,12,20,28,36]
     num.forEach((n,i) => {
         card_details = result.list[n]
         weather = {
@@ -99,7 +105,7 @@ function get_five_day_forecast(){
             short_desc: card_details.weather[0].main,
             icon: card_details.weather[0].icon
         }
-        addToCard(weather, i + 1)
+            addToCard(weather, i + 1);
     });
 
 }
@@ -109,16 +115,22 @@ function get_uvi_data(){
     console.log("1.  Add uvi for: day_1")
     uvi = result.value
     $(".uv.day_1").text(uvi + " UV Index")
+    $(".uv.day_2").text(uvi + " UV Index")
+    $(".uv.day_3").text(uvi + " UV Index")
+    $(".uv.day_4").text(uvi + " UV Index")
+    $(".uv.day_5").text(uvi + " UV Index")
+    $(".uv.day_6").text(uvi + " UV Index")
 }
 
 function get_uvi_forecast(){
     let result = JSON.parse(localStorage.getItem("uvi/forecast"));
-    let days = ["day_2","day_3","day_4","day_5"];
-    let i = 0;
+    let days = ["day_7","day_8","day_9","day_10"];
+    let i = 6;
     days.forEach((day, i) => {
         console.log(i + ".  Add uvi for: " + day)
         uvi = result[i].value
         $(".uv."+ day).text(uvi + " UV Index")
+        console.log($(".uv." + day))
     });
 }
 
