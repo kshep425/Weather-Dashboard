@@ -153,10 +153,10 @@ $(document).ready(function () {
         }).then(function () {
             state = get_state(coord_lat, coord_lon);
         }).then(function () {
-            get_uvi_data()
-            display_complete("Finished getting response")
+            get_uvi_data();
+            display_complete("Finished getting response");
         }).fail(function (response) {
-            console.log(response)
+            console.log(response);
             alert("Query Failed");
         })
     }
