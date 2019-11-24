@@ -5,7 +5,6 @@ $(document).ready(function () {
     execute_forecast_query()
 
     let days = ["day_1", "day_2", "day_3", "day_4", "day_5", "day_6", "day_7", "day_8", "day_9", "day_10"];
-    //let days = ["day_1", "day_1_1", "day_1_2", "day_1_3", "day_1_4", "day_1_5", "day_2","day_3","day_4","day_5"];
     let i = 0;
     days.forEach((day, i) => {
         console.log(i + ".  Create card for: " + day)
@@ -53,7 +52,7 @@ $(document).ready(function () {
         //}
 
         // create 3 day forecast cards
-        if (i > 5 && i <= 8) {
+        if (i >= 5 && i < 8) {
             console.log(i)
             // Original element with attached data
             var $elem2 = $(weather_card).data("arr", [1]),
@@ -66,7 +65,7 @@ $(document).ready(function () {
         }
 
         // create five day forecast cards
-        if (i > 5) {
+        if (i >= 5) {
             var $elem = $(weather_card).data("arr", [1]),
                 $clone1 = $elem.clone(true)
                     // Deep copy to prevent data sharing
@@ -127,7 +126,6 @@ $(document).ready(function () {
 
         query_data["lat"] = coord_lat;
         query_data["lon"] = coord_lon;
-        debugger
         weather_query
             (type, query_data)
     }
