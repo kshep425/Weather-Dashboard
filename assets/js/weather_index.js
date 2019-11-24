@@ -7,10 +7,10 @@
  * @returns the created element.
  */
 const elementOf = (tag, className, style, callback) => {
-  const e = $(`<${tag}>`).addClass(className);
-  if (style) e.css(style);
-  if (callback) callback(e);
-  return e;
+    const e = $(`<${tag}>`).addClass(className);
+    if (style) e.css(style);
+    if (callback) callback(e);
+    return e;
 };
 
 /**
@@ -21,11 +21,11 @@ const elementOf = (tag, className, style, callback) => {
  * @returns the created element.
  */
 const divOf = (className, style, callback) =>
-  elementOf("div", className, style, callback);
+    elementOf("div", className, style, callback);
 
 const appendAll = (parent, ...children) => {
-  children.forEach(c => parent.append(c));
-  return parent;
+    children.forEach(c => parent.append(c));
+    return parent;
 };
 
 /**
@@ -47,13 +47,13 @@ const search_list_item = (search_id, search_formatted) => {
  *
  */
 const weather_api = {
-  key: "0cd120b5a3fb267b2e15e0ccf0932a56",
-  uri: "https://api.openweathermap.org/data/2.5",
-  iconUri: "http://openweathermap.org/img/wn/"
+    key: "0cd120b5a3fb267b2e15e0ccf0932a56",
+    uri: "https://api.openweathermap.org/data/2.5",
+    iconUri: "http://openweathermap.org/img/wn/"
 };
 
 const weather_query_url = type =>
-  `${weather_api.uri}/${type}`;
+    `${weather_api.uri}/${type}`;
 
 let query_data = {
     APPID: "0cd120b5a3fb267b2e15e0ccf0932a56"
@@ -75,27 +75,27 @@ const weather_query = (q_type, q_data) => {
     }).then(function (response) {
         console.log(response);
         localStorage.setItem(q_type, JSON.stringify(response));
-    }).done(function (){
-        if (q_type === "forecast"){
+    }).done(function () {
+        if (q_type === "forecast") {
             get_five_day_forecast();
         }
-        if (q_type === "uvi"){
+        if (q_type === "uvi") {
             get_uvi_data()
         }
-        if (q_type === "uvi\/forecast"){
+        if (q_type === "uvi\/forecast") {
             get_uvi_forecast()
         }
-    }).fail(function(err){
+    }).fail(function (err) {
         console.log(err);
         alert("An error occured");
     });
 }
 
-function get_five_day_forecast(){
+function get_five_day_forecast() {
     console.log("Parse the five day forecast response");
     let result = JSON.parse(localStorage.getItem("forecast"));
-    num = [0,1,2,3,4,5,12,20,28,36]
-    num.forEach((n,i) => {
+    num = [0, 1, 2, 3, 4, 5, 12, 20, 28, 36]
+    num.forEach((n, i) => {
         card_details = result.list[n]
         weather = {
             temperature: card_details.main.temp,
@@ -105,12 +105,12 @@ function get_five_day_forecast(){
             short_desc: card_details.weather[0].main,
             icon: card_details.weather[0].icon
         }
-            addToCard(weather, i + 1);
+        addToCard(weather, i + 1);
     });
 
 }
 
-function get_uvi_data(){
+function get_uvi_data() {
     let result = JSON.parse(localStorage.getItem("uvi"));
     console.log("1.  Add uvi for: day_1")
     uvi = result.value
@@ -122,20 +122,20 @@ function get_uvi_data(){
     $(".uv.day_6").text(uvi + " UV Index")
 }
 
-function get_uvi_forecast(){
+function get_uvi_forecast() {
     let result = JSON.parse(localStorage.getItem("uvi/forecast"));
-    let days = ["day_7","day_8","day_9","day_10"];
+    let days = ["day_7", "day_8", "day_9", "day_10"];
     let i = 6;
     days.forEach((day, i) => {
         console.log(i + ".  Add uvi for: " + day)
         uvi = result[i].value
-        $(".uv."+ day).text(uvi + " UV Index")
+        $(".uv." + day).text(uvi + " UV Index")
         console.log($(".uv." + day))
     });
 }
 
 // add card text to elements based on query results
-function addToCard(weather_info, day){
+function addToCard(weather_info, day) {
     console.log("Add weather info to card")
     d = ".day_" + day
     $(".card-header" + d).text(weather_info.date_time);
@@ -143,6 +143,6 @@ function addToCard(weather_info, day){
     $(".short_desc" + d).text(weather_info.short_desc);
     $(".temperature" + d).text(Math.floor(weather_info.temperature) + short_unit);
     $(".humidity" + d).text(weather_info.humidity + "% Humidity");
-    $(".wind" + d).text(weather_info.wind.speed  + " " + wind_speed_unit);
-    $(".wind_icon" + d).css({"transform": "rotate(" + weather_info.wind.deg + "deg)"});
+    $(".wind" + d).text(weather_info.wind.speed + " " + wind_speed_unit);
+    $(".wind_icon" + d).css({ "transform": "rotate(" + weather_info.wind.deg + "deg)" });
 }

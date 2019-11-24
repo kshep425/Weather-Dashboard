@@ -1,10 +1,10 @@
 /**
  * Create the 5 day forecast cards for media screens
  */
-$(document).ready(function(){
+$(document).ready(function () {
     execute_forecast_query()
 
-    let days = ["day_1", "day_2","day_3","day_4","day_5","day_6","day_7","day_8","day_9","day_10"];
+    let days = ["day_1", "day_2", "day_3", "day_4", "day_5", "day_6", "day_7", "day_8", "day_9", "day_10"];
     //let days = ["day_1", "day_1_1", "day_1_2", "day_1_3", "day_1_4", "day_1_5", "day_2","day_3","day_4","day_5"];
     let i = 0;
     days.forEach((day, i) => {
@@ -44,47 +44,47 @@ $(document).ready(function(){
         appendAll(weather_card_wind, weather_card_wind_speed, weather_card_wind_icon)
         // create five day forecast cards
         //if (i > 5){
-            var $elem = $( weather_card ).data( "arr", [ 1 ] ),
-            $clone1 = $elem.clone( true )
-            // Deep copy to prevent data sharing
-            .data( "arr", $.extend( [], $elem.data( "arr" ) ) );
-            $clone1.appendTo("#all_forecasts");
-            console.log($("#all_forecasts"))
+        var $elem = $(weather_card).data("arr", [1]),
+            $clone1 = $elem.clone(true)
+                // Deep copy to prevent data sharing
+                .data("arr", $.extend([], $elem.data("arr")));
+        $clone1.appendTo("#all_forecasts");
+        console.log($("#all_forecasts"))
         //}
 
         // create 3 day forecast cards
-        if (i >5 && i <= 8){
+        if (i > 5 && i <= 8) {
             console.log(i)
             // Original element with attached data
-            var $elem2 = $( weather_card ).data( "arr", [ 1 ] ),
-            $clone2 = $elem2.clone( true )
-            // Deep copy to prevent data sharing
-            .data( "arr", $.extend( [], $elem.data( "arr" ) ) );
+            var $elem2 = $(weather_card).data("arr", [1]),
+                $clone2 = $elem2.clone(true)
+                    // Deep copy to prevent data sharing
+                    .data("arr", $.extend([], $elem.data("arr")));
             $clone2.appendTo("#f3_day")
 
             console.log($("#f3_day"))
         }
 
         // create five day forecast cards
-        if (i > 5){
-            var $elem = $( weather_card ).data( "arr", [ 1 ] ),
-            $clone1 = $elem.clone( true )
-            // Deep copy to prevent data sharing
-            .data( "arr", $.extend( [], $elem.data( "arr" ) ) );
+        if (i > 5) {
+            var $elem = $(weather_card).data("arr", [1]),
+                $clone1 = $elem.clone(true)
+                    // Deep copy to prevent data sharing
+                    .data("arr", $.extend([], $elem.data("arr")));
             $clone1.appendTo("#f5_day");
             console.log($("#f5_day"))
         }
 
         // create today forecast cards
-        if (i <= 5){
-        // if (i === 1){
+        if (i <= 5) {
+            // if (i === 1){
             console.log(i)
             console.log($(weather_card).data())
             // Original element with attached data
-            var $elem3 = $( weather_card ).data( "arr", [ 1 ] ),
-                $clone3 = $elem3.clone( true )
-                // Deep copy to prevent data sharing
-                .data( "arr", $.extend( [], $elem.data( "arr" ) ) );
+            var $elem3 = $(weather_card).data("arr", [1]),
+                $clone3 = $elem3.clone(true)
+                    // Deep copy to prevent data sharing
+                    .data("arr", $.extend([], $elem.data("arr")));
             $clone3.appendTo("#today")
 
             console.log($("#today"))
@@ -93,14 +93,14 @@ $(document).ready(function(){
     });
 
     // get query results
-    $("#forecast_summaries").click(function(event){
+    $("#forecast_summaries").click(function (event) {
         event.preventDefault();
         execute_forecast_query();
         execute_uvi_query("uvi");
         execute_uvi_query("uvi/forecast");
     })
 
-    $("label").click(function(event){
+    $("label").click(function (event) {
         event.preventDefault()
         execute_forecast_query()
         execute_uvi_query("uvi");
@@ -117,10 +117,10 @@ $(document).ready(function(){
         query_data["units"] = unit;
 
         weather_query
-        (five_day_forecast, query_data)
+            (five_day_forecast, query_data)
     }
 
-    function execute_uvi_query(type){
+    function execute_uvi_query(type) {
         delete query_data["q"];
         delete query_data["id"];
         delete query_data["units"];
@@ -129,7 +129,7 @@ $(document).ready(function(){
         query_data["lon"] = coord_lon;
         debugger
         weather_query
-        (type, query_data)
+            (type, query_data)
     }
 
 }); // document.ready
