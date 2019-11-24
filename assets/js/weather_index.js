@@ -113,6 +113,17 @@ function get_five_day_forecast() {
 function get_uvi_data() {
     let result = JSON.parse(localStorage.getItem("uvi"));
     console.log("1.  Add uvi for: day_1")
+    if (result === null){
+        delete query_data["q"];
+        delete query_data["id"];
+        delete query_data["units"];
+
+        query_data["lat"] = coord_lat;
+        query_data["lon"] = coord_lon;
+        weather_query
+            ("uvi", query_data)
+        return;
+    }
     uvi = result.value
     $(".uv.day_1").text(uvi + " UV Index")
     $(".uv.day_2").text(uvi + " UV Index")
@@ -124,7 +135,7 @@ function get_uvi_data() {
 
 function get_uvi_forecast() {
     let result = JSON.parse(localStorage.getItem("uvi/forecast"));
-    let days = ["day_7", "day_8", "day_9", "day_10"];
+    let days = ["day_4", "day_7", "day_8", "day_9", "day_10"];
     let i = 6;
     days.forEach((day, i) => {
         console.log(i + ".  Add uvi for: " + day)
