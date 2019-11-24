@@ -9,7 +9,7 @@ $(document).ready(function(){
     days.forEach((day, i) => {
         console.log(i + ".  Create card for: " + day)
         const weather_card = divOf(
-            "card my-3 weather_card "
+            "card my-3 bg-light weather_card "
         )
         const weather_card_header = divOf("card-header " + day)
         const weather_card_body = divOf(
@@ -76,13 +76,17 @@ $(document).ready(function(){
 
     // get query results
     $("#forecast_summaries").click(function(event){
-        event.preventDefault()
-        execute_forecast_query(event)
+        event.preventDefault();
+        execute_forecast_query();
+        execute_uvi_query("uvi");
+        execute_uvi_query("uvi/forecast");
     })
 
     $("label").click(function(event){
         event.preventDefault()
-        execute_forecast_query(event)
+        execute_forecast_query()
+        execute_uvi_query("uvi");
+        execute_uvi_query("uvi/forecast");
     })
 
     function execute_forecast_query() {
@@ -96,6 +100,19 @@ $(document).ready(function(){
 
         weather_query
         (five_day_forecast, query_data)
+    }
+
+    function execute_uvi_query(type){
+        const five_day_forecast = type;
+        delete query_data["q"];
+        delete query_data["id"];
+        delete query_data["units"];
+
+        query_data["lat"] = coord_lat;
+        query_data["lon"] = coord_lon;
+
+        weather_query
+        (type, query_data)
     }
 
 }); // document.ready
