@@ -55,7 +55,7 @@ let query_data = {
 
 /**
  * Creates a Weather API Query and returns result
- * @param {string} q_type type can be 'forecast' or 'weather'
+ * @param {string} q_type type can be 'forecast' or 'weather' or 'uvi'
  * @param {string} q_data this is the query data object
  * @returns the query response
  */
@@ -68,9 +68,17 @@ const weather_query = (q_type, q_data) => {
 
     }).then(function (response) {
         console.log(response);
-        localStorage.setItem("forecast", JSON.stringify(response));
+        localStorage.setItem(q_type, JSON.stringify(response));
     }).done(function (response){
-        var weather = get_five_day_forecast();
+        if (q_type === "forecast"){
+            get_five_day_forecast();
+        }
+        if (q_type === "uvi"){
+            get_uvi_data()
+        }
+        if (q_type === "uvi/forecast"){
+            get_uvi_forecast()
+        }
     }).fail(function(err){
         console.log(err);
         alert("An error occured");
@@ -79,7 +87,7 @@ const weather_query = (q_type, q_data) => {
 
 function get_five_day_forecast(){
     console.log("Parse the five day forecast response");
-    result = JSON.parse(localStorage.getItem("forecast"));
+    let result = JSON.parse(localStorage.getItem("weather_query_response"));
     num = [4,12,20,28,36]
     num.forEach((n,i) => {
         card_details = result.list[n]
@@ -96,6 +104,24 @@ function get_five_day_forecast(){
 
 }
 
+function get_uvi_data(){
+    let result = JSON.parse(localStorage.getItem("uvi"));
+    console.log("1.  Add uvi for: day_1")
+    uvi = result.value
+    $(".uv.day_1").text(uvi + " UV Index")
+}
+
+function get_uvi_forecast(){
+    let result = JSON.parse(localStorage.getItem("uvi/forecast"));
+    let days = ["day_2","day_3","day_4","day_5"];
+    let i = 0;
+    days.forEach((day, i) => {
+        console.log(i + ".  Add uvi for: " + day)
+        uvi = result[i].value
+        $(".uv."+ day).text(uvi + " UV Index")
+    });
+}
+
 // add card text to elements based on query results
 function addToCard(weather_info, day){
     console.log("Add weather info to card")
@@ -107,5 +133,4 @@ function addToCard(weather_info, day){
     $(".humidity" + d).text(weather_info.humidity + "% Humidity");
     $(".wind" + d).text(weather_info.wind.speed  + " " + wind_speed_unit);
     $(".wind_icon" + d).css({"transform": "rotate(" + weather_info.wind.deg + "deg)"});
-
 }
