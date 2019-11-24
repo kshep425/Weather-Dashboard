@@ -87,7 +87,7 @@ const weather_query = (q_type, q_data) => {
 
 function get_five_day_forecast(){
     console.log("Parse the five day forecast response");
-    let result = JSON.parse(localStorage.getItem("weather_query_response"));
+    let result = JSON.parse(localStorage.getItem("forecast"));
     num = [4,12,20,28,36]
     num.forEach((n,i) => {
         card_details = result.list[n]
