@@ -2,7 +2,7 @@
 let query_url, default_data, data,
 coord_lon, coord_lat,
 weather_description, weather_icon, weather_short_description,
-temp, humidity,
+temp, humidity, uvi,
 wind_speed, wind_deg,
 city_name, city_id, state,
 date_time,
@@ -95,8 +95,13 @@ $(document).ready(function(){
         $("#ci_state").text(state);
         $("#ci_country").text(country);
         $("#ci_icon_small").attr("src", weather_api_icon_query_url);
-        $("#ci_temp").text(temp)
-        $("#ci_unit").text(short_unit)
+        $("#ci_temp").text(temp);
+        $("#ci_unit").text(short_unit);
+        $("#humidity").text(humidity);
+        $("#wind_speed").text(wind_speed);
+        $("#wind_unit").text(wind_speed_unit);
+        $("#wind_icon2").text(wind_dir_icon)
+        $("#uv_index").text(uvi)
         display_complete("Finished displaying city info: " + $("#ci_city").text() + " " + $("#ci_temp").text() + " " + $("#ci_unit").text())
     }
 
