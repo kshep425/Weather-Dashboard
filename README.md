@@ -2,7 +2,7 @@
 A Weather Dashboard using Open Weather Map API.
 
 <a href="https://kshep425.github.io/Weather-Dashboard/" target="_blank">
-The Password Generator Home Page
+The Weather Dashboard Home Page
   <p align="center">
     <img alt="The Weatherdashboard Home Page" src="./assets/img/WeatherDashboard.png">
   </p>
