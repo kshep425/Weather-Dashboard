@@ -1,0 +1,32 @@
+{
+  "name": "weather-dashboard",
+  "version": "1.0.0",
+  "description": "\"Get the weather\"",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "scripts": {
+    "test": "\"jest --verbose --coverage test/*\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshep425/Weather-Dashboard.git"
+  },
+  "keywords": [
+    "Weather"
+  ],
+  "author": "Keisha Shepherd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kshep425/Weather-Dashboard/issues"
+  },
+  "homepage": "https://github.com/kshep425/Weather-Dashboard#readme"
+}
